@@ -4,10 +4,10 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "start": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
-    "dev": "node .",
-    "dev:start": "npm-run-all build dev",
+    "start": "node .",
+    "dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
     "build": "npm-run-all clean lint tsc copy-assets",
+    "dev:start": "npm-run-all build start",
     "copy-assets": "ts-node tools/copyAssets",
     "tsc": "tsc",
     "clean": "rimraf build/*",
