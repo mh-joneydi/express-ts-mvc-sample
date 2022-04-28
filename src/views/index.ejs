@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+        <title><%= pageTitle %></title>
+    </head>
+    <body class="rtl">
+        <div class="form-group">
+            <h1>کارهای <small>روزمره</small></h1>
+            <form
+                action="/todo/add-todo"
+                role="form"
+                class="row w-50 justify-content-center mx-auto"
+                method="POST"
+            >
+                <div class="input-group">
+                    <input
+                        type="text"
+                        name="todo"
+                        class="form-control w-50"
+                        placeholder="کار امروز"
+                    />
+                    <div class="input-group-prepend">
+                        <button type="submit" class="btn btn-primary fa fa-plus"/>
+                    </div>
+                </div>
+            </form>
+            <div class="mx-auto w-50 mb-3 alert alert-primary row">
+                <p class="d-inline col">کارهای انجام شده : <span class="badge badge-success badge-pill"><%= completedCount %> <!-- CompletedTodos --></span></p>
+                <p class="d-inline col">کارهای باقی مانده امروز : <span class="badge badge-warning badge-pill"><%= todosCount %><!-- RemainingTodos --></span></p>
+            </div>
+            <% if(todos.length > 0) { %> 
+                <ul class="list-unstyled" id="todo">
+                    <% for(let todo of todos) { %> 
+                        <li>
+                            <div class="alert <%= todo.completed ? 'alert-success' : 'alert-secondary'  %> ">
+                                <% if(todo.completed) {%>
+                                    <del><%= todo.title %> </del>
+                                    <a href="/todo/delete-todo/<%= todo.id %> " class="close fa fa-trash" style="color: red"></a>
+                                <% } else { %> 
+                                    <%= todo.title %> 
+                                    <a href="/todo/delete-todo/<%= todo.id %> " class="close fa fa-trash" style="color: red"></a>
+                                    <a href="/todo/completed-todo/<%= todo.id %> " class="close fa fa-check-square mr-2" style="color: green"></a>
+                                <% } %> 
+                            </div>
+                        </li>
+                    <% } %> 
+                </ul>
+            <% } else { %> 
+                <div class="alert alert-warning w-50 mx-auto" role="alert">
+                    <h4 class="alert-heading">هیچ کاری برای امروز نیست</h4>
+                    <p>می تونی کارهای امروزت رو بالا بنویسی تا برات ثبت کنم</p>
+                    <hr>
+                    <p class="mb-0">اگر کم و کاستی داشت به دل نگیر <span class="fa fa-heart" style="color: red"/></p>
+                </div>
+            <% } %> 
+        </div>
+    </body>
+</html>
